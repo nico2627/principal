@@ -1,0 +1,40 @@
+# Create CSV, Read CSV and Perform Data Transformations
+
+import pandas as pd
+
+# ---- Step 1: Create Dataset ----
+data = {
+"Make":["Honda","Honda","Toyota","Nissan","Toyota","Honda","Ford","Chevrolet","Chevrolet","Dodge","Dodge"],
+"Model":["Accord","Accord","Camry","Altima","Corolla","Civic","F-150","Silverado","Impala","Charger","Charger"],
+"Color":["Red","Blue","Black","Green","Black","White","Black","Green","Silver","Silver","Silver"],
+"Mileage":[63512,95135,75006,69847,87278,138789,89073,109231,87675,34853,58173],
+"Sell_Price":[4000,2500,45000,3826,2224,2723,3950,4959,3791,4349,4252],
+"Buy_Price":[3000,2000,44000,3000,2100,1900,3000,4500,3500,3500,4000]
+}
+
+df = pd.DataFrame(data)
+
+# ---- Step 2: Save CSV ----
+df.to_csv("cars_data.csv", index=False)
+
+# ---- Step 3: Read CSV ----
+df = pd.read_csv("cars_data.csv")
+
+print("Original Dataset:\n")
+print(df)
+
+# ---- Step 4: Cars with Sell Price > 4000 ----
+print("\nCars with Sell Price > 4000:\n")
+print(df[df["Sell_Price"] > 4000])
+
+# ---- Step 5: Sort Data in Ascending Order by Sell Price ----
+sorted_df = df.sort_values(by="Sell_Price", ascending=True)
+
+print("\nSorted Dataset (Ascending Sell Price):\n")
+print(sorted_df)
+
+# ---- Step 6: Group Data by Make ----
+grouped_df = df.groupby("Make")[["Sell_Price","Buy_Price"]].mean()
+
+print("\nGrouped Data by Make (Average Prices):\n")
+print(grouped_df)
