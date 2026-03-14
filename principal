@@ -1,0 +1,39 @@
+# PCA on Iris Dataset for Dimensionality Reduction
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
+# Load dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# Standardize features
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Apply PCA
+pca = PCA()
+X_pca = pca.fit_transform(X_scaled)
+
+# Explained variance ratio
+print("Explained Variance Ratio:", pca.explained_variance_ratio_)
+
+# Select 2 principal components
+pca = PCA(n_components=2)
+X_reduced = pca.fit_transform(X_scaled)
+
+# Create DataFrame
+df = pd.DataFrame(X_reduced, columns=["PC1","PC2"])
+df["Species"] = y
+
+# Visualization
+plt.figure()
+plt.scatter(df["PC1"], df["PC2"], c=df["Species"])
+plt.xlabel("Principal Component 1")
+plt.ylabel("Principal Component 2")
+plt.title("PCA Visualization of Iris Dataset")
+plt.show()
